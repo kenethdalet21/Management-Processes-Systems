@@ -39,8 +39,8 @@ root.render(
   </React.StrictMode>
 );
 
-// Properly unregister all service workers and clear cache
-if ('serviceWorker' in navigator) {
+// Properly unregister all service workers and clear cache (development only)
+if (process.env.NODE_ENV === 'development' && 'serviceWorker' in navigator) {
   navigator.serviceWorker.getRegistrations().then((registrations) => {
     for (let registration of registrations) {
       registration.unregister().then((success) => {
@@ -52,22 +52,20 @@ if ('serviceWorker' in navigator) {
   }).catch((error) => {
     console.error('Error unregistering service workers:', error);
   });
-}
-
-// Clear all caches
-if ('caches' in window) {
-  caches.keys().then((cacheNames) => {
-    return Promise.all(
-      cacheNames.map((cacheName) => {
-        console.log('Deleting cache:', cacheName);
-        return caches.delete(cacheName);
-      })
-    );
-  }).then(() => {
-    console.log('All caches cleared');
-  }).catch((error) => {
-    console.error('Error clearing caches:', error);
-  });
+  
+  // Clear all service worker caches
+  if ('caches' in window) {
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cacheName) => {
+          console.log('Deleting cache:', cacheName);
+          return caches.delete(cacheName);
+        })
+      );
+    }).catch((error) => {
+      console.error('Error clearing caches:', error);
+    });
+  }
 }
 
 // Initialize IndexedDB for offline storage and sync
@@ -187,9 +185,4 @@ async function syncPendingData() {
   } catch (error) {
     console.error('Error during sync:', error);
   }
-}
-
-// Force page reload to clear any service worker cache
-if (window.performance && performance.navigation.type === performance.navigation.TYPE_RELOAD) {
-  console.log('Page reloaded - service workers and cache should be cleared');
 }
