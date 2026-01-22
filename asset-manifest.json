@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/Management-Processes-Systems/static/js/main.e6b9d4ed.js",
+    "main.js": "/Management-Processes-Systems/static/js/main.c0c91bd7.js",
     "index.html": "/Management-Processes-Systems/index.html",
-    "main.e6b9d4ed.js.map": "/Management-Processes-Systems/static/js/main.e6b9d4ed.js.map"
+    "main.c0c91bd7.js.map": "/Management-Processes-Systems/static/js/main.c0c91bd7.js.map"
   },
   "entrypoints": [
-    "static/js/main.e6b9d4ed.js"
+    "static/js/main.c0c91bd7.js"
   ]
 }
