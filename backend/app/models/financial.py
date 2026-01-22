@@ -218,7 +218,7 @@ class BusinessSettings(db.Model):
     
     # Settings
     default_tax_rate = db.Column(db.Numeric(5, 2), default=0)
-    currency = db.Column(db.String(10), default='USD')
+    currency = db.Column(db.String(10), default='PHP')
     date_format = db.Column(db.String(20), default='YYYY-MM-DD')
     
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
