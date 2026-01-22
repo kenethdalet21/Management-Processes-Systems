@@ -26,7 +26,8 @@ def create_app(config_class=Config):
          resources={r"/api/*": {"origins": [
              "http://localhost:3000",
              "http://localhost:3001",
-             "https://kenethdalet21.github.io"
+             "https://kenethdalet21.github.io",
+             "https://kdrt0921.pythonanywhere.com"
          ]}},
          supports_credentials=True,
          allow_headers=["Content-Type", "Authorization"],
