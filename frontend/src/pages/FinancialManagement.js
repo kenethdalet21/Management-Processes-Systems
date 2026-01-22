@@ -86,28 +86,40 @@ const FinancialManagement = () => {
       {/* Summary Cards */}
       <Grid container spacing={2} sx={{ mb: 3 }}>
         <Grid item xs={6} md={3}>
-          <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box sx={{ overflow: 'hidden', flex: 1, mr: 1 }}><Typography variant="caption" color="text.secondary">Total Revenue</Typography><Typography variant="h6" sx={{ fontSize: { xs: '0.9rem', md: '1.15rem' }, wordBreak: 'break-word' }}>{formatCurrency(incomeData.total_revenue)}</Typography></Box>
-            <TrendingUpIcon color="success" sx={{ flexShrink: 0 }} />
-          </Box></CardContent></Card>
+          <Card><CardContent>
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <TrendingUpIcon color="success" sx={{ fontSize: 20 }} />
+              <Typography variant="caption" color="text.secondary">Total Revenue</Typography>
+            </Box>
+            <Typography variant="h5" sx={{ fontSize: { xs: '0.9rem', md: '1.2rem' }, wordBreak: 'break-word' }}>{formatCurrency(incomeData.total_revenue)}</Typography>
+          </CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
-          <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box sx={{ overflow: 'hidden', flex: 1, mr: 1 }}><Typography variant="caption" color="text.secondary">Net Income</Typography><Typography variant="h6" sx={{ fontSize: { xs: '0.9rem', md: '1.15rem' }, wordBreak: 'break-word' }}>{formatCurrency(incomeData.net_income)}</Typography></Box>
-            <AccountBalanceIcon color="primary" sx={{ flexShrink: 0 }} />
-          </Box></CardContent></Card>
+          <Card><CardContent>
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <AccountBalanceIcon color="primary" sx={{ fontSize: 20 }} />
+              <Typography variant="caption" color="text.secondary">Net Income</Typography>
+            </Box>
+            <Typography variant="h5" sx={{ fontSize: { xs: '0.9rem', md: '1.2rem' }, wordBreak: 'break-word' }}>{formatCurrency(incomeData.net_income)}</Typography>
+          </CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
-          <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box sx={{ overflow: 'hidden', flex: 1, mr: 1 }}><Typography variant="caption" color="text.secondary">Total Assets</Typography><Typography variant="h6" sx={{ fontSize: { xs: '0.9rem', md: '1.15rem' }, wordBreak: 'break-word' }}>{formatCurrency(balanceData.total_assets)}</Typography></Box>
-            <AssessmentIcon color="info" sx={{ flexShrink: 0 }} />
-          </Box></CardContent></Card>
+          <Card><CardContent>
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <AssessmentIcon color="info" sx={{ fontSize: 20 }} />
+              <Typography variant="caption" color="text.secondary">Total Assets</Typography>
+            </Box>
+            <Typography variant="h5" sx={{ fontSize: { xs: '0.9rem', md: '1.2rem' }, wordBreak: 'break-word' }}>{formatCurrency(balanceData.total_assets)}</Typography>
+          </CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
-          <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box sx={{ overflow: 'hidden', flex: 1, mr: 1 }}><Typography variant="caption" color="text.secondary">Gross Margin</Typography><Typography variant="h6" sx={{ fontSize: { xs: '0.9rem', md: '1.15rem' } }}>{((ratioData.profitability?.gross_margin || 0) * 100).toFixed(1)}%</Typography></Box>
-            <TrendingUpIcon color="success" sx={{ flexShrink: 0 }} />
-          </Box></CardContent></Card>
+          <Card><CardContent>
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <TrendingUpIcon color="success" sx={{ fontSize: 20 }} />
+              <Typography variant="caption" color="text.secondary">Gross Margin</Typography>
+            </Box>
+            <Typography variant="h5" sx={{ fontSize: { xs: '1.1rem', md: '1.4rem' } }}>{((ratioData.profitability?.gross_margin || 0) * 100).toFixed(1)}%</Typography>
+          </CardContent></Card>
         </Grid>
       </Grid>
 

@@ -204,28 +204,40 @@ const PayrollManagement = () => {
 
       <Grid container spacing={2} sx={{ mb: 3 }}>
         <Grid item xs={6} md={3}>
-          <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box><Typography variant="caption" color="text.secondary">Employees</Typography><Typography variant="h5">{employees.length}</Typography></Box>
-            <PersonIcon color="primary" />
-          </Box></CardContent></Card>
+          <Card><CardContent>
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <PersonIcon color="primary" sx={{ fontSize: 20 }} />
+              <Typography variant="caption" color="text.secondary">Employees</Typography>
+            </Box>
+            <Typography variant="h5" sx={{ fontSize: { xs: '1.1rem', md: '1.4rem' } }}>{Array.isArray(employees) ? employees.length.toLocaleString() : 0}</Typography>
+          </CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
-          <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box><Typography variant="caption" color="text.secondary">Total Payroll (Month)</Typography><Typography variant="h5">₱{(summary?.total_gross || 0).toFixed(2)}</Typography></Box>
-            <AttachMoneyIcon color="success" />
-          </Box></CardContent></Card>
+          <Card><CardContent>
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <AttachMoneyIcon color="success" sx={{ fontSize: 20 }} />
+              <Typography variant="caption" color="text.secondary">Total Payroll (Month)</Typography>
+            </Box>
+            <Typography variant="h5" sx={{ fontSize: { xs: '0.9rem', md: '1.2rem' }, wordBreak: 'break-word' }}>₱{(summary?.total_gross || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</Typography>
+          </CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
-          <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box><Typography variant="caption" color="text.secondary">Pending Payments</Typography><Typography variant="h5">{summary?.pending_count || 0}</Typography></Box>
-            <AccessTimeIcon color="warning" />
-          </Box></CardContent></Card>
+          <Card><CardContent>
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <AccessTimeIcon color="warning" sx={{ fontSize: 20 }} />
+              <Typography variant="caption" color="text.secondary">Pending Payments</Typography>
+            </Box>
+            <Typography variant="h5" sx={{ fontSize: { xs: '1.1rem', md: '1.4rem' } }}>{(summary?.pending_count || 0).toLocaleString()}</Typography>
+          </CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
-          <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box><Typography variant="caption" color="text.secondary">Paid This Month</Typography><Typography variant="h5">₱{(summary?.total_paid || 0).toFixed(2)}</Typography></Box>
-            <PaymentIcon color="info" />
-          </Box></CardContent></Card>
+          <Card><CardContent>
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <PaymentIcon color="info" sx={{ fontSize: 20 }} />
+              <Typography variant="caption" color="text.secondary">Paid This Month</Typography>
+            </Box>
+            <Typography variant="h5" sx={{ fontSize: { xs: '0.9rem', md: '1.2rem' }, wordBreak: 'break-word' }}>₱{(summary?.total_paid || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</Typography>
+          </CardContent></Card>
         </Grid>
       </Grid>
 

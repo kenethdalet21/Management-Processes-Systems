@@ -188,46 +188,38 @@ const ProductManagement = () => {
       <Grid container spacing={2} sx={{ mb: 3 }}>
         <Grid item xs={6} md={3}>
           <Card><CardContent>
-            <Box display="flex" alignItems="center" justifyContent="space-between">
-              <Box>
-                <Typography variant="caption" color="text.secondary">Total Items</Typography>
-                <Typography variant="h5">{stats.totalProducts}</Typography>
-              </Box>
-              <InventoryIcon color="primary" />
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <InventoryIcon color="primary" sx={{ fontSize: 20 }} />
+              <Typography variant="caption" color="text.secondary">Total Items</Typography>
             </Box>
+            <Typography variant="h5" sx={{ fontSize: { xs: '1.1rem', md: '1.4rem' } }}>{stats.totalProducts.toLocaleString()}</Typography>
           </CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
           <Card><CardContent>
-            <Box display="flex" alignItems="center" justifyContent="space-between">
-              <Box>
-                <Typography variant="caption" color="text.secondary">Inventory Value</Typography>
-                <Typography variant="h5">₱{stats.totalValue.toFixed(2)}</Typography>
-              </Box>
-              <AttachMoneyIcon color="success" />
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <AttachMoneyIcon color="success" sx={{ fontSize: 20 }} />
+              <Typography variant="caption" color="text.secondary">Inventory Value</Typography>
             </Box>
+            <Typography variant="h5" sx={{ fontSize: { xs: '0.9rem', md: '1.2rem' }, wordBreak: 'break-word' }}>₱{stats.totalValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</Typography>
           </CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
           <Card sx={{ bgcolor: stats.lowStock > 0 ? 'warning.dark' : 'inherit' }}><CardContent>
-            <Box display="flex" alignItems="center" justifyContent="space-between">
-              <Box>
-                <Typography variant="caption" color="text.secondary">Low Stock</Typography>
-                <Typography variant="h5">{stats.lowStock}</Typography>
-              </Box>
-              <TrendingUpIcon color="warning" />
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <TrendingUpIcon color="warning" sx={{ fontSize: 20 }} />
+              <Typography variant="caption" color="text.secondary">Low Stock</Typography>
             </Box>
+            <Typography variant="h5" sx={{ fontSize: { xs: '1.1rem', md: '1.4rem' } }}>{stats.lowStock.toLocaleString()}</Typography>
           </CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
           <Card sx={{ bgcolor: stats.outOfStock > 0 ? 'error.dark' : 'inherit' }}><CardContent>
-            <Box display="flex" alignItems="center" justifyContent="space-between">
-              <Box>
-                <Typography variant="caption" color="text.secondary">Out of Stock</Typography>
-                <Typography variant="h5">{stats.outOfStock}</Typography>
-              </Box>
-              <InventoryIcon color="error" />
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <InventoryIcon color="error" sx={{ fontSize: 20 }} />
+              <Typography variant="caption" color="text.secondary">Out of Stock</Typography>
             </Box>
+            <Typography variant="h5" sx={{ fontSize: { xs: '1.1rem', md: '1.4rem' } }}>{stats.outOfStock.toLocaleString()}</Typography>
           </CardContent></Card>
         </Grid>
       </Grid>

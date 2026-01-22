@@ -154,8 +154,10 @@ class InventoryLog(db.Model):
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
     stock_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     quantity = db.Column(db.Integer, nullable=False)
-    type = db.Column(db.String(20), nullable=False)  # 'in' or 'out'
+    type = db.Column(db.String(20), nullable=False)  # 'stock_in' or 'stock_out'
     status = db.Column(Enum(InventoryStatus), default=InventoryStatus.IN_PROCESS)
+    reference_number = db.Column(db.String(50))
+    balance_after = db.Column(db.Integer, default=0)
     notes = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
@@ -168,6 +170,8 @@ class InventoryLog(db.Model):
             'quantity': self.quantity,
             'type': self.type,
             'status': self.status.value if self.status else None,
+            'reference_number': self.reference_number,
+            'balance_after': self.balance_after,
             'notes': self.notes,
             'created_at': self.created_at.isoformat() if self.created_at else None
         }
@@ -316,23 +320,27 @@ class PayrollRecord(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
+            'employee_id': self.employee_id,
             'employee': self.employee.to_dict() if self.employee else None,
             'pay_period_start': self.pay_period_start.isoformat() if self.pay_period_start else None,
             'pay_period_end': self.pay_period_end.isoformat() if self.pay_period_end else None,
-            'regular_hours': float(self.regular_hours),
-            'overtime_hours': float(self.overtime_hours),
+            'hours_worked': float(self.regular_hours) if self.regular_hours else 0,
+            'regular_hours': float(self.regular_hours) if self.regular_hours else 0,
+            'overtime_hours': float(self.overtime_hours) if self.overtime_hours else 0,
             'hourly_rate': float(self.hourly_rate) if self.hourly_rate else None,
             'overtime_rate': float(self.overtime_rate) if self.overtime_rate else None,
             'base_salary': float(self.base_salary) if self.base_salary else None,
-            'regular_pay': float(self.regular_pay),
-            'overtime_pay': float(self.overtime_pay),
-            'bonuses': float(self.bonuses),
-            'gross_pay': float(self.gross_pay),
-            'tax_deductions': float(self.tax_deductions),
-            'insurance_deductions': float(self.insurance_deductions),
-            'other_deductions': float(self.other_deductions),
-            'total_deductions': float(self.total_deductions),
-            'net_pay': float(self.net_pay),
+            'regular_pay': float(self.regular_pay) if self.regular_pay else 0,
+            'overtime_pay': float(self.overtime_pay) if self.overtime_pay else 0,
+            'bonus': float(self.bonuses) if self.bonuses else 0,
+            'bonuses': float(self.bonuses) if self.bonuses else 0,
+            'gross_pay': float(self.gross_pay) if self.gross_pay else 0,
+            'tax_deductions': float(self.tax_deductions) if self.tax_deductions else 0,
+            'insurance_deductions': float(self.insurance_deductions) if self.insurance_deductions else 0,
+            'other_deductions': float(self.other_deductions) if self.other_deductions else 0,
+            'deductions': float(self.total_deductions) if self.total_deductions else 0,
+            'total_deductions': float(self.total_deductions) if self.total_deductions else 0,
+            'net_pay': float(self.net_pay) if self.net_pay else 0,
             'payment_date': self.payment_date.isoformat() if self.payment_date else None,
             'payment_method': self.payment_method,
             'is_paid': self.is_paid,

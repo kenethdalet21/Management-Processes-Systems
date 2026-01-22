@@ -61,14 +61,12 @@ const Dashboard = () => {
   const MetricCard = ({ title, value, icon: Icon, color, subtitle }) => (
     <Card sx={{ bgcolor: `${color}.dark`, height: '100%' }}>
       <CardContent>
-        <Box display="flex" alignItems="center" justifyContent="space-between">
-          <Box sx={{ overflow: 'hidden', flex: 1, mr: 1 }}>
-            <Typography variant="caption" color="white" sx={{ opacity: 0.8 }}>{title}</Typography>
-            <Typography variant="h6" color="white" fontWeight="bold" sx={{ fontSize: { xs: '0.9rem', md: '1.15rem' }, wordBreak: 'break-word' }}>{value}</Typography>
-            {subtitle && <Typography variant="caption" color="white" sx={{ opacity: 0.7 }}>{subtitle}</Typography>}
-          </Box>
-          <Icon sx={{ fontSize: { xs: 30, md: 40 }, color: 'white', opacity: 0.8, flexShrink: 0 }} />
+        <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+          <Icon sx={{ fontSize: 20, color: 'white', opacity: 0.9 }} />
+          <Typography variant="caption" color="white" sx={{ opacity: 0.9 }}>{title}</Typography>
         </Box>
+        <Typography variant="h5" color="white" fontWeight="bold" sx={{ fontSize: { xs: '1rem', md: '1.3rem' }, wordBreak: 'break-word' }}>{value}</Typography>
+        {subtitle && <Typography variant="caption" color="white" sx={{ opacity: 0.7 }}>{subtitle}</Typography>}
       </CardContent>
     </Card>
   );

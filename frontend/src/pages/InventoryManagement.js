@@ -186,28 +186,40 @@ const InventoryManagement = () => {
 
       <Grid container spacing={2} sx={{ mb: 3 }}>
         <Grid item xs={6} md={3}>
-          <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box><Typography variant="caption" color="text.secondary">Total Products</Typography><Typography variant="h5">{analysis?.total_products || 0}</Typography></Box>
-            <InventoryIcon color="primary" />
-          </Box></CardContent></Card>
+          <Card><CardContent>
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <InventoryIcon color="primary" sx={{ fontSize: 20 }} />
+              <Typography variant="caption" color="text.secondary">Total Products</Typography>
+            </Box>
+            <Typography variant="h5" sx={{ fontSize: { xs: '1.1rem', md: '1.4rem' } }}>{(analysis?.total_products || 0).toLocaleString()}</Typography>
+          </CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
-          <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box><Typography variant="caption" color="text.secondary">Total Units</Typography><Typography variant="h5">{analysis?.total_units || 0}</Typography></Box>
-            <TrendingUpIcon color="success" />
-          </Box></CardContent></Card>
+          <Card><CardContent>
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <TrendingUpIcon color="success" sx={{ fontSize: 20 }} />
+              <Typography variant="caption" color="text.secondary">Total Units</Typography>
+            </Box>
+            <Typography variant="h5" sx={{ fontSize: { xs: '1.1rem', md: '1.4rem' } }}>{(analysis?.total_units || 0).toLocaleString()}</Typography>
+          </CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
-          <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box><Typography variant="caption" color="text.secondary">Total Value</Typography><Typography variant="h5">₱{(analysis?.total_value || 0).toFixed(2)}</Typography></Box>
-            <TrendingUpIcon color="info" />
-          </Box></CardContent></Card>
+          <Card><CardContent>
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <TrendingUpIcon color="info" sx={{ fontSize: 20 }} />
+              <Typography variant="caption" color="text.secondary">Total Value</Typography>
+            </Box>
+            <Typography variant="h5" sx={{ fontSize: { xs: '0.9rem', md: '1.2rem' }, wordBreak: 'break-word' }}>₱{(analysis?.total_value || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</Typography>
+          </CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
-          <Card sx={{ bgcolor: lowStock.length > 0 ? 'warning.dark' : 'inherit' }}><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box><Typography variant="caption" color="text.secondary">Low Stock Alerts</Typography><Typography variant="h5">{lowStock.length}</Typography></Box>
-            <WarningIcon color="warning" />
-          </Box></CardContent></Card>
+          <Card sx={{ bgcolor: lowStock.length > 0 ? 'warning.dark' : 'inherit' }}><CardContent>
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <WarningIcon color="warning" sx={{ fontSize: 20 }} />
+              <Typography variant="caption" color="text.secondary">Low Stock Alerts</Typography>
+            </Box>
+            <Typography variant="h5" sx={{ fontSize: { xs: '1.1rem', md: '1.4rem' } }}>{Array.isArray(lowStock) ? lowStock.length.toLocaleString() : 0}</Typography>
+          </CardContent></Card>
         </Grid>
       </Grid>
 

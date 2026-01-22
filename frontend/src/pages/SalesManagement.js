@@ -213,28 +213,40 @@ const SalesManagement = () => {
 
       <Grid container spacing={2} sx={{ mb: 3 }}>
         <Grid item xs={6} md={3}>
-          <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box><Typography variant="caption" color="text.secondary">Total Sales</Typography><Typography variant="h6" sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }}>{(analysis?.total_sales || 0).toLocaleString()}</Typography></Box>
-            <ReceiptIcon color="primary" />
-          </Box></CardContent></Card>
+          <Card><CardContent>
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <ReceiptIcon color="primary" sx={{ fontSize: 20 }} />
+              <Typography variant="caption" color="text.secondary">Total Sales</Typography>
+            </Box>
+            <Typography variant="h5" sx={{ fontSize: { xs: '1.1rem', md: '1.4rem' } }}>{(analysis?.total_sales || 0).toLocaleString()}</Typography>
+          </CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
-          <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box sx={{ overflow: 'hidden' }}><Typography variant="caption" color="text.secondary">Total Revenue</Typography><Typography variant="h6" sx={{ fontSize: { xs: '0.85rem', md: '1.1rem' } }} noWrap>₱{(analysis?.total_revenue || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</Typography></Box>
-            <AttachMoneyIcon color="success" />
-          </Box></CardContent></Card>
+          <Card><CardContent>
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <AttachMoneyIcon color="success" sx={{ fontSize: 20 }} />
+              <Typography variant="caption" color="text.secondary">Total Revenue</Typography>
+            </Box>
+            <Typography variant="h5" sx={{ fontSize: { xs: '0.9rem', md: '1.2rem' }, wordBreak: 'break-word' }}>₱{(analysis?.total_revenue || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</Typography>
+          </CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
-          <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box sx={{ overflow: 'hidden' }}><Typography variant="caption" color="text.secondary">Avg Order Value</Typography><Typography variant="h6" sx={{ fontSize: { xs: '0.85rem', md: '1.1rem' } }} noWrap>₱{(analysis?.avg_order_value || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</Typography></Box>
-            <TrendingUpIcon color="info" />
-          </Box></CardContent></Card>
+          <Card><CardContent>
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <TrendingUpIcon color="info" sx={{ fontSize: 20 }} />
+              <Typography variant="caption" color="text.secondary">Avg Order Value</Typography>
+            </Box>
+            <Typography variant="h5" sx={{ fontSize: { xs: '0.9rem', md: '1.2rem' }, wordBreak: 'break-word' }}>₱{(analysis?.avg_order_value || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</Typography>
+          </CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
-          <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box><Typography variant="caption" color="text.secondary">Customers</Typography><Typography variant="h6" sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }}>{Array.isArray(customers) ? customers.length.toLocaleString() : 0}</Typography></Box>
-            <PersonIcon color="secondary" />
-          </Box></CardContent></Card>
+          <Card><CardContent>
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <PersonIcon color="secondary" sx={{ fontSize: 20 }} />
+              <Typography variant="caption" color="text.secondary">Customers</Typography>
+            </Box>
+            <Typography variant="h5" sx={{ fontSize: { xs: '1.1rem', md: '1.4rem' } }}>{Array.isArray(customers) ? customers.length.toLocaleString() : 0}</Typography>
+          </CardContent></Card>
         </Grid>
       </Grid>
 
