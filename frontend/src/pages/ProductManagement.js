@@ -44,10 +44,11 @@ const ProductManagement = () => {
   const fetchProducts = async () => {
     try {
       const response = await api.get(`/products?page=${page + 1}&per_page=${rowsPerPage}&search=${search}`);
-      setProducts(response.data.products);
-      setTotal(response.data.total);
+      setProducts(Array.isArray(response.data?.products) ? response.data.products : []);
+      setTotal(response.data?.total || 0);
     } catch (err) {
       setError('Failed to fetch products');
+      setProducts([]);
     }
   };
 
@@ -163,15 +164,15 @@ const ProductManagement = () => {
 
   const stats = {
     totalProducts: total,
-    totalValue: products.reduce((sum, p) => sum + (p.item_cost * p.current_stock), 0),
-    lowStock: products.filter(p => p.current_stock <= p.low_stock_threshold && p.current_stock > 0).length,
-    outOfStock: products.filter(p => p.current_stock === 0 && p.track_inventory).length
+    totalValue: Array.isArray(products) ? products.reduce((sum, p) => sum + (p.item_cost * p.current_stock), 0) : 0,
+    lowStock: Array.isArray(products) ? products.filter(p => p.current_stock <= p.low_stock_threshold && p.current_stock > 0).length : 0,
+    outOfStock: Array.isArray(products) ? products.filter(p => p.current_stock === 0 && p.track_inventory).length : 0
   };
 
   // Filter products based on tab
-  const filteredProducts = products.filter(p => 
+  const filteredProducts = Array.isArray(products) ? products.filter(p => 
     tabValue === 0 ? !p.is_service : p.is_service
-  );
+  ) : [];
 
   return (
     <Box>
@@ -303,12 +304,12 @@ const ProductManagement = () => {
                   <TableCell>{product.sku}</TableCell>
                   <TableCell>{product.name}</TableCell>
                   <TableCell>{product.category?.name || '-'}</TableCell>
-                  <TableCell align="right">₱{product.item_cost.toFixed(2)}</TableCell>
-                  <TableCell align="right">₱{product.selling_price.toFixed(2)}</TableCell>
+                  <TableCell align="right">₱{product.item_cost?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) || '0.00'}</TableCell>
+                  <TableCell align="right">₱{product.selling_price?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) || '0.00'}</TableCell>
                   <TableCell align="right">{margin}%</TableCell>
                   {tabValue === 0 && (
                     <TableCell align="right">
-                      {product.track_inventory ? product.current_stock : 'N/A'}
+                      {product.track_inventory ? product.current_stock?.toLocaleString() : 'N/A'}
                     </TableCell>
                   )}
                   <TableCell>

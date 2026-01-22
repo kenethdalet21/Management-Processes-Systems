@@ -47,28 +47,31 @@ const InventoryManagement = () => {
   const fetchProducts = async () => {
     try {
       const response = await api.get('/inventory/products');
-      setProducts(response.data);
+      setProducts(Array.isArray(response.data) ? response.data : []);
     } catch (err) {
       console.error('Failed to fetch products');
+      setProducts([]);
     }
   };
 
   const fetchLogs = async () => {
     try {
       const response = await api.get(`/inventory/logs?page=${page + 1}&per_page=${rowsPerPage}`);
-      setLogs(response.data.logs);
-      setTotal(response.data.total);
+      setLogs(Array.isArray(response.data?.logs) ? response.data.logs : []);
+      setTotal(response.data?.total || 0);
     } catch (err) {
       setError('Failed to fetch inventory logs');
+      setLogs([]);
     }
   };
 
   const fetchLowStock = async () => {
     try {
       const response = await api.get('/inventory/low-stock');
-      setLowStock(response.data);
+      setLowStock(Array.isArray(response.data) ? response.data : []);
     } catch (err) {
       console.error('Failed to fetch low stock items');
+      setLowStock([]);
     }
   };
 
@@ -243,7 +246,7 @@ const InventoryManagement = () => {
               <TableCell>Reference</TableCell><TableCell>Notes</TableCell><TableCell>Status</TableCell><TableCell align="center">Actions</TableCell>
             </TableRow></TableHead>
             <TableBody>
-              {logs.map((log) => {
+              {Array.isArray(logs) && logs.map((log) => {
                 const isSelected = selected.indexOf(log.id) !== -1;
                 return (
                   <TableRow key={log.id} selected={isSelected}>
@@ -278,7 +281,7 @@ const InventoryManagement = () => {
           <Table>
             <TableHead><TableRow><TableCell>SKU</TableCell><TableCell>Product Name</TableCell><TableCell align="right">Current Stock</TableCell><TableCell align="right">Threshold</TableCell><TableCell>Status</TableCell><TableCell>Action</TableCell></TableRow></TableHead>
             <TableBody>
-              {lowStock.length === 0 ? <TableRow><TableCell colSpan={6} align="center">No low stock alerts</TableCell></TableRow> : lowStock.map((item) => (
+              {!Array.isArray(lowStock) || lowStock.length === 0 ? <TableRow><TableCell colSpan={6} align="center">No low stock alerts</TableCell></TableRow> : lowStock.map((item) => (
                 <TableRow key={item.id}>
                   <TableCell>{item.sku}</TableCell><TableCell>{item.name}</TableCell>
                   <TableCell align="right">{item.current_stock}</TableCell><TableCell align="right">{item.low_stock_threshold}</TableCell>
@@ -318,7 +321,7 @@ const InventoryManagement = () => {
         <DialogTitle>Stock In</DialogTitle>
         <DialogContent>
           <Grid container spacing={2} sx={{ mt: 1 }}>
-            <Grid item xs={12}><FormControl fullWidth><InputLabel>Product</InputLabel><Select value={selectedProduct} onChange={(e) => setSelectedProduct(e.target.value)} label="Product">{products.map((p) => (<MenuItem key={p.id} value={p.id}>{p.name} (Current: {p.current_stock})</MenuItem>))}</Select></FormControl></Grid>
+            <Grid item xs={12}><FormControl fullWidth><InputLabel>Product</InputLabel><Select value={selectedProduct} onChange={(e) => setSelectedProduct(e.target.value)} label="Product">{Array.isArray(products) && products.map((p) => (<MenuItem key={p.id} value={p.id}>{p.name} (Current: {p.current_stock?.toLocaleString() || 0})</MenuItem>))}</Select></FormControl></Grid>
             <Grid item xs={12}><TextField fullWidth label="Quantity" type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} required /></Grid>
             <Grid item xs={12}><TextField fullWidth label="Reference Number" value={reference} onChange={(e) => setReference(e.target.value)} /></Grid>
             <Grid item xs={12}><TextField fullWidth label="Notes" multiline rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} /></Grid>
@@ -331,7 +334,7 @@ const InventoryManagement = () => {
         <DialogTitle>Stock Out</DialogTitle>
         <DialogContent>
           <Grid container spacing={2} sx={{ mt: 1 }}>
-            <Grid item xs={12}><FormControl fullWidth><InputLabel>Product</InputLabel><Select value={selectedProduct} onChange={(e) => setSelectedProduct(e.target.value)} label="Product">{products.map((p) => (<MenuItem key={p.id} value={p.id}>{p.name} (Current: {p.current_stock})</MenuItem>))}</Select></FormControl></Grid>
+            <Grid item xs={12}><FormControl fullWidth><InputLabel>Product</InputLabel><Select value={selectedProduct} onChange={(e) => setSelectedProduct(e.target.value)} label="Product">{Array.isArray(products) && products.map((p) => (<MenuItem key={p.id} value={p.id}>{p.name} (Current: {p.current_stock?.toLocaleString() || 0})</MenuItem>))}</Select></FormControl></Grid>
             <Grid item xs={12}><TextField fullWidth label="Quantity" type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} required /></Grid>
             <Grid item xs={12}><TextField fullWidth label="Reference Number" value={reference} onChange={(e) => setReference(e.target.value)} /></Grid>
             <Grid item xs={12}><TextField fullWidth label="Notes" multiline rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} /></Grid>

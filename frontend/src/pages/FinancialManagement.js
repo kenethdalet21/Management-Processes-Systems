@@ -11,6 +11,8 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as ChartTooltip } fro
 import api from '../services/api';
 import ExcelImportExport from '../components/ExcelImportExport';
 
+const formatCurrency = (value) => `₱${parseFloat(value || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+
 const FinancialManagement = () => {
   const [tabValue, setTabValue] = useState(0);
   const [statements, setStatements] = useState(null);
@@ -85,26 +87,26 @@ const FinancialManagement = () => {
       <Grid container spacing={2} sx={{ mb: 3 }}>
         <Grid item xs={6} md={3}>
           <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box><Typography variant="caption" color="text.secondary">Total Revenue</Typography><Typography variant="h5">₱{(incomeData.total_revenue || 0).toFixed(2)}</Typography></Box>
-            <TrendingUpIcon color="success" />
+            <Box sx={{ overflow: 'hidden', flex: 1, mr: 1 }}><Typography variant="caption" color="text.secondary">Total Revenue</Typography><Typography variant="h6" sx={{ fontSize: { xs: '0.9rem', md: '1.15rem' }, wordBreak: 'break-word' }}>{formatCurrency(incomeData.total_revenue)}</Typography></Box>
+            <TrendingUpIcon color="success" sx={{ flexShrink: 0 }} />
           </Box></CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
           <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box><Typography variant="caption" color="text.secondary">Net Income</Typography><Typography variant="h5">₱{(incomeData.net_income || 0).toFixed(2)}</Typography></Box>
-            <AccountBalanceIcon color="primary" />
+            <Box sx={{ overflow: 'hidden', flex: 1, mr: 1 }}><Typography variant="caption" color="text.secondary">Net Income</Typography><Typography variant="h6" sx={{ fontSize: { xs: '0.9rem', md: '1.15rem' }, wordBreak: 'break-word' }}>{formatCurrency(incomeData.net_income)}</Typography></Box>
+            <AccountBalanceIcon color="primary" sx={{ flexShrink: 0 }} />
           </Box></CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
           <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box><Typography variant="caption" color="text.secondary">Total Assets</Typography><Typography variant="h5">₱{(balanceData.total_assets || 0).toFixed(2)}</Typography></Box>
-            <AssessmentIcon color="info" />
+            <Box sx={{ overflow: 'hidden', flex: 1, mr: 1 }}><Typography variant="caption" color="text.secondary">Total Assets</Typography><Typography variant="h6" sx={{ fontSize: { xs: '0.9rem', md: '1.15rem' }, wordBreak: 'break-word' }}>{formatCurrency(balanceData.total_assets)}</Typography></Box>
+            <AssessmentIcon color="info" sx={{ flexShrink: 0 }} />
           </Box></CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
           <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box><Typography variant="caption" color="text.secondary">Gross Margin</Typography><Typography variant="h5">{((ratioData.profitability?.gross_margin || 0) * 100).toFixed(1)}%</Typography></Box>
-            <TrendingUpIcon color="success" />
+            <Box sx={{ overflow: 'hidden', flex: 1, mr: 1 }}><Typography variant="caption" color="text.secondary">Gross Margin</Typography><Typography variant="h6" sx={{ fontSize: { xs: '0.9rem', md: '1.15rem' } }}>{((ratioData.profitability?.gross_margin || 0) * 100).toFixed(1)}%</Typography></Box>
+            <TrendingUpIcon color="success" sx={{ flexShrink: 0 }} />
           </Box></CardContent></Card>
         </Grid>
       </Grid>
@@ -121,16 +123,16 @@ const FinancialManagement = () => {
               <Table>
                 <TableHead><TableRow><TableCell colSpan={2}><Typography variant="h6">Income Statement</Typography></TableCell></TableRow></TableHead>
                 <TableBody>
-                  <TableRow><TableCell><strong>Revenue</strong></TableCell><TableCell align="right">₱{(incomeData.total_revenue || 0).toFixed(2)}</TableCell></TableRow>
-                  <TableRow><TableCell sx={{ pl: 4 }}>Sales Revenue</TableCell><TableCell align="right">₱{(incomeData.sales_revenue || 0).toFixed(2)}</TableCell></TableRow>
-                  <TableRow><TableCell sx={{ pl: 4 }}>Service Revenue</TableCell><TableCell align="right">₱{(incomeData.service_revenue || 0).toFixed(2)}</TableCell></TableRow>
-                  <TableRow><TableCell><strong>Cost of Goods Sold</strong></TableCell><TableCell align="right">(₱{(incomeData.cost_of_goods_sold || 0).toFixed(2)})</TableCell></TableRow>
-                  <TableRow sx={{ bgcolor: 'action.hover' }}><TableCell><strong>Gross Profit</strong></TableCell><TableCell align="right"><strong>₱{(incomeData.gross_profit || 0).toFixed(2)}</strong></TableCell></TableRow>
-                  <TableRow><TableCell><strong>Operating Expenses</strong></TableCell><TableCell align="right">(₱{(incomeData.operating_expenses || 0).toFixed(2)})</TableCell></TableRow>
-                  <TableRow sx={{ pl: 4 }}><TableCell sx={{ pl: 4 }}>Payroll Expenses</TableCell><TableCell align="right">₱{(incomeData.payroll_expenses || 0).toFixed(2)}</TableCell></TableRow>
-                  <TableRow sx={{ bgcolor: 'action.hover' }}><TableCell><strong>Operating Income</strong></TableCell><TableCell align="right"><strong>₱{(incomeData.operating_income || 0).toFixed(2)}</strong></TableCell></TableRow>
-                  <TableRow><TableCell>Other Income/Expenses</TableCell><TableCell align="right">₱{(incomeData.other_income || 0).toFixed(2)}</TableCell></TableRow>
-                  <TableRow sx={{ bgcolor: 'success.dark' }}><TableCell><strong>Net Income</strong></TableCell><TableCell align="right"><strong>₱{(incomeData.net_income || 0).toFixed(2)}</strong></TableCell></TableRow>
+                  <TableRow><TableCell><strong>Revenue</strong></TableCell><TableCell align="right">{formatCurrency(incomeData.total_revenue)}</TableCell></TableRow>
+                  <TableRow><TableCell sx={{ pl: 4 }}>Sales Revenue</TableCell><TableCell align="right">{formatCurrency(incomeData.sales_revenue)}</TableCell></TableRow>
+                  <TableRow><TableCell sx={{ pl: 4 }}>Service Revenue</TableCell><TableCell align="right">{formatCurrency(incomeData.service_revenue)}</TableCell></TableRow>
+                  <TableRow><TableCell><strong>Cost of Goods Sold</strong></TableCell><TableCell align="right">({formatCurrency(incomeData.cost_of_goods_sold)})</TableCell></TableRow>
+                  <TableRow sx={{ bgcolor: 'action.hover' }}><TableCell><strong>Gross Profit</strong></TableCell><TableCell align="right"><strong>{formatCurrency(incomeData.gross_profit)}</strong></TableCell></TableRow>
+                  <TableRow><TableCell><strong>Operating Expenses</strong></TableCell><TableCell align="right">({formatCurrency(incomeData.operating_expenses)})</TableCell></TableRow>
+                  <TableRow sx={{ pl: 4 }}><TableCell sx={{ pl: 4 }}>Payroll Expenses</TableCell><TableCell align="right">{formatCurrency(incomeData.payroll_expenses)}</TableCell></TableRow>
+                  <TableRow sx={{ bgcolor: 'action.hover' }}><TableCell><strong>Operating Income</strong></TableCell><TableCell align="right"><strong>{formatCurrency(incomeData.operating_income)}</strong></TableCell></TableRow>
+                  <TableRow><TableCell>Other Income/Expenses</TableCell><TableCell align="right">{formatCurrency(incomeData.other_income)}</TableCell></TableRow>
+                  <TableRow sx={{ bgcolor: 'success.dark' }}><TableCell><strong>Net Income</strong></TableCell><TableCell align="right"><strong>{formatCurrency(incomeData.net_income)}</strong></TableCell></TableRow>
                 </TableBody>
               </Table>
             </TableContainer>
@@ -155,12 +157,12 @@ const FinancialManagement = () => {
               <Table>
                 <TableHead><TableRow><TableCell colSpan={2}><Typography variant="h6">Assets</Typography></TableCell></TableRow></TableHead>
                 <TableBody>
-                  <TableRow><TableCell><strong>Current Assets</strong></TableCell><TableCell align="right">₱{(balanceData.current_assets || 0).toFixed(2)}</TableCell></TableRow>
-                  <TableRow><TableCell sx={{ pl: 4 }}>Cash</TableCell><TableCell align="right">₱{(balanceData.cash || 0).toFixed(2)}</TableCell></TableRow>
-                  <TableRow><TableCell sx={{ pl: 4 }}>Accounts Receivable</TableCell><TableCell align="right">₱{(balanceData.accounts_receivable || 0).toFixed(2)}</TableCell></TableRow>
-                  <TableRow><TableCell sx={{ pl: 4 }}>Inventory</TableCell><TableCell align="right">₱{(balanceData.inventory_value || 0).toFixed(2)}</TableCell></TableRow>
-                  <TableRow><TableCell><strong>Non-Current Assets</strong></TableCell><TableCell align="right">₱{(balanceData.non_current_assets || 0).toFixed(2)}</TableCell></TableRow>
-                  <TableRow sx={{ bgcolor: 'primary.dark' }}><TableCell><strong>Total Assets</strong></TableCell><TableCell align="right"><strong>₱{(balanceData.total_assets || 0).toFixed(2)}</strong></TableCell></TableRow>
+                  <TableRow><TableCell><strong>Current Assets</strong></TableCell><TableCell align="right">{formatCurrency(balanceData.current_assets)}</TableCell></TableRow>
+                  <TableRow><TableCell sx={{ pl: 4 }}>Cash</TableCell><TableCell align="right">{formatCurrency(balanceData.cash)}</TableCell></TableRow>
+                  <TableRow><TableCell sx={{ pl: 4 }}>Accounts Receivable</TableCell><TableCell align="right">{formatCurrency(balanceData.accounts_receivable)}</TableCell></TableRow>
+                  <TableRow><TableCell sx={{ pl: 4 }}>Inventory</TableCell><TableCell align="right">{formatCurrency(balanceData.inventory_value)}</TableCell></TableRow>
+                  <TableRow><TableCell><strong>Non-Current Assets</strong></TableCell><TableCell align="right">{formatCurrency(balanceData.non_current_assets)}</TableCell></TableRow>
+                  <TableRow sx={{ bgcolor: 'primary.dark' }}><TableCell><strong>Total Assets</strong></TableCell><TableCell align="right"><strong>{formatCurrency(balanceData.total_assets)}</strong></TableCell></TableRow>
                 </TableBody>
               </Table>
             </TableContainer>
@@ -170,13 +172,13 @@ const FinancialManagement = () => {
               <Table>
                 <TableHead><TableRow><TableCell colSpan={2}><Typography variant="h6">Liabilities & Equity</Typography></TableCell></TableRow></TableHead>
                 <TableBody>
-                  <TableRow><TableCell><strong>Current Liabilities</strong></TableCell><TableCell align="right">₱{(balanceData.current_liabilities || 0).toFixed(2)}</TableCell></TableRow>
-                  <TableRow><TableCell sx={{ pl: 4 }}>Accounts Payable</TableCell><TableCell align="right">₱{(balanceData.accounts_payable || 0).toFixed(2)}</TableCell></TableRow>
-                  <TableRow><TableCell sx={{ pl: 4 }}>Accrued Payroll</TableCell><TableCell align="right">₱{(balanceData.accrued_payroll || 0).toFixed(2)}</TableCell></TableRow>
-                  <TableRow><TableCell><strong>Long-term Liabilities</strong></TableCell><TableCell align="right">₱{(balanceData.long_term_liabilities || 0).toFixed(2)}</TableCell></TableRow>
-                  <TableRow sx={{ bgcolor: 'error.dark' }}><TableCell><strong>Total Liabilities</strong></TableCell><TableCell align="right"><strong>₱{(balanceData.total_liabilities || 0).toFixed(2)}</strong></TableCell></TableRow>
-                  <TableRow><TableCell><strong>Shareholders' Equity</strong></TableCell><TableCell align="right">₱{(balanceData.shareholders_equity || 0).toFixed(2)}</TableCell></TableRow>
-                  <TableRow sx={{ bgcolor: 'primary.dark' }}><TableCell><strong>Total Liab. & Equity</strong></TableCell><TableCell align="right"><strong>₱{((balanceData.total_liabilities || 0) + (balanceData.shareholders_equity || 0)).toFixed(2)}</strong></TableCell></TableRow>
+                  <TableRow><TableCell><strong>Current Liabilities</strong></TableCell><TableCell align="right">{formatCurrency(balanceData.current_liabilities)}</TableCell></TableRow>
+                  <TableRow><TableCell sx={{ pl: 4 }}>Accounts Payable</TableCell><TableCell align="right">{formatCurrency(balanceData.accounts_payable)}</TableCell></TableRow>
+                  <TableRow><TableCell sx={{ pl: 4 }}>Accrued Payroll</TableCell><TableCell align="right">{formatCurrency(balanceData.accrued_payroll)}</TableCell></TableRow>
+                  <TableRow><TableCell><strong>Long-term Liabilities</strong></TableCell><TableCell align="right">{formatCurrency(balanceData.long_term_liabilities)}</TableCell></TableRow>
+                  <TableRow sx={{ bgcolor: 'error.dark' }}><TableCell><strong>Total Liabilities</strong></TableCell><TableCell align="right"><strong>{formatCurrency(balanceData.total_liabilities)}</strong></TableCell></TableRow>
+                  <TableRow><TableCell><strong>Shareholders' Equity</strong></TableCell><TableCell align="right">{formatCurrency(balanceData.shareholders_equity)}</TableCell></TableRow>
+                  <TableRow sx={{ bgcolor: 'primary.dark' }}><TableCell><strong>Total Liab. & Equity</strong></TableCell><TableCell align="right"><strong>{formatCurrency((balanceData.total_liabilities || 0) + (balanceData.shareholders_equity || 0))}</strong></TableCell></TableRow>
                 </TableBody>
               </Table>
             </TableContainer>
@@ -191,14 +193,14 @@ const FinancialManagement = () => {
             <TableHead><TableRow><TableCell colSpan={2}><Typography variant="h6">Cash Flow Statement</Typography></TableCell></TableRow></TableHead>
             <TableBody>
               <TableRow><TableCell colSpan={2}><strong>Operating Activities</strong></TableCell></TableRow>
-              <TableRow><TableCell sx={{ pl: 4 }}>Net Income</TableCell><TableCell align="right">₱{(cashFlowData.net_income || 0).toFixed(2)}</TableCell></TableRow>
-              <TableRow><TableCell sx={{ pl: 4 }}>Cash from Sales</TableCell><TableCell align="right">₱{(cashFlowData.cash_from_sales || 0).toFixed(2)}</TableCell></TableRow>
-              <TableRow><TableCell sx={{ pl: 4 }}>Payroll Payments</TableCell><TableCell align="right">(₱{(cashFlowData.payroll_payments || 0).toFixed(2)})</TableCell></TableRow>
-              <TableRow sx={{ bgcolor: 'action.hover' }}><TableCell><strong>Net Operating Cash Flow</strong></TableCell><TableCell align="right"><strong>${(cashFlowData.operating_cash_flow || 0).toFixed(2)}</strong></TableCell></TableRow>
+              <TableRow><TableCell sx={{ pl: 4 }}>Net Income</TableCell><TableCell align="right">{formatCurrency(cashFlowData.net_income)}</TableCell></TableRow>
+              <TableRow><TableCell sx={{ pl: 4 }}>Cash from Sales</TableCell><TableCell align="right">{formatCurrency(cashFlowData.cash_from_sales)}</TableCell></TableRow>
+              <TableRow><TableCell sx={{ pl: 4 }}>Payroll Payments</TableCell><TableCell align="right">({formatCurrency(cashFlowData.payroll_payments)})</TableCell></TableRow>
+              <TableRow sx={{ bgcolor: 'action.hover' }}><TableCell><strong>Net Operating Cash Flow</strong></TableCell><TableCell align="right"><strong>{formatCurrency(cashFlowData.operating_cash_flow)}</strong></TableCell></TableRow>
               <TableRow><TableCell colSpan={2}><strong>Investing Activities</strong></TableCell></TableRow>
-              <TableRow><TableCell sx={{ pl: 4 }}>Inventory Purchases</TableCell><TableCell align="right">(${(cashFlowData.inventory_purchases || 0).toFixed(2)})</TableCell></TableRow>
-              <TableRow sx={{ bgcolor: 'action.hover' }}><TableCell><strong>Net Investing Cash Flow</strong></TableCell><TableCell align="right"><strong>${(cashFlowData.investing_cash_flow || 0).toFixed(2)}</strong></TableCell></TableRow>
-              <TableRow sx={{ bgcolor: 'success.dark' }}><TableCell><strong>Net Change in Cash</strong></TableCell><TableCell align="right"><strong>${(cashFlowData.net_cash_change || 0).toFixed(2)}</strong></TableCell></TableRow>
+              <TableRow><TableCell sx={{ pl: 4 }}>Inventory Purchases</TableCell><TableCell align="right">({formatCurrency(cashFlowData.inventory_purchases)})</TableCell></TableRow>
+              <TableRow sx={{ bgcolor: 'action.hover' }}><TableCell><strong>Net Investing Cash Flow</strong></TableCell><TableCell align="right"><strong>{formatCurrency(cashFlowData.investing_cash_flow)}</strong></TableCell></TableRow>
+              <TableRow sx={{ bgcolor: 'success.dark' }}><TableCell><strong>Net Change in Cash</strong></TableCell><TableCell align="right"><strong>{formatCurrency(cashFlowData.net_cash_change)}</strong></TableCell></TableRow>
             </TableBody>
           </Table>
         </TableContainer>
@@ -212,7 +214,7 @@ const FinancialManagement = () => {
             <Grid item xs={6} md={3}><RatioCard title="Current Ratio" value={ratioData.liquidity?.current_ratio} benchmark="2.0" description="Current Assets / Current Liabilities" /></Grid>
             <Grid item xs={6} md={3}><RatioCard title="Quick Ratio" value={ratioData.liquidity?.quick_ratio} benchmark="1.0" description="(Current Assets - Inventory) / Current Liabilities" /></Grid>
             <Grid item xs={6} md={3}><RatioCard title="Cash Ratio" value={ratioData.liquidity?.cash_ratio} benchmark="0.5" description="Cash / Current Liabilities" /></Grid>
-            <Grid item xs={6} md={3}><RatioCard title="Working Capital" value={`₱${(ratioData.liquidity?.working_capital || 0).toFixed(0)}`} benchmark="₱0" description="Current Assets - Current Liabilities" /></Grid>
+            <Grid item xs={6} md={3}><RatioCard title="Working Capital" value={formatCurrency(ratioData.liquidity?.working_capital)} benchmark="₱0" description="Current Assets - Current Liabilities" /></Grid>
           </Grid>
 
           <Typography variant="h6" gutterBottom>Profitability Ratios</Typography>

@@ -56,18 +56,20 @@ const Dashboard = () => {
 
   useEffect(() => { fetchAllData(); }, [fetchAllData]);
 
-  const formatCurrency = (value) => `₱${parseFloat(value || 0).toFixed(2)}`;
+  const formatCurrency = (value) => `₱${parseFloat(value || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+
+  const formatNumber = (value) => parseFloat(value || 0).toLocaleString();
 
   const MetricCard = ({ title, value, icon: Icon, color, subtitle }) => (
     <Card sx={{ bgcolor: `${color}.dark`, height: '100%' }}>
       <CardContent>
         <Box display="flex" alignItems="center" justifyContent="space-between">
-          <Box>
+          <Box sx={{ overflow: 'hidden', flex: 1, mr: 1 }}>
             <Typography variant="caption" color="white" sx={{ opacity: 0.8 }}>{title}</Typography>
-            <Typography variant="h5" color="white" fontWeight="bold">{value}</Typography>
+            <Typography variant="h6" color="white" fontWeight="bold" sx={{ fontSize: { xs: '0.9rem', md: '1.15rem' }, wordBreak: 'break-word' }}>{value}</Typography>
             {subtitle && <Typography variant="caption" color="white" sx={{ opacity: 0.7 }}>{subtitle}</Typography>}
           </Box>
-          <Icon sx={{ fontSize: 40, color: 'white', opacity: 0.8 }} />
+          <Icon sx={{ fontSize: { xs: 30, md: 40 }, color: 'white', opacity: 0.8, flexShrink: 0 }} />
         </Box>
       </CardContent>
     </Card>

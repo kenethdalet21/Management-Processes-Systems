@@ -45,20 +45,21 @@ const PayrollManagement = () => {
   const fetchEmployees = async () => {
     try {
       const response = await api.get('/payroll/employees');
-      setEmployees(response.data);
+      setEmployees(Array.isArray(response.data) ? response.data : []);
     } catch (err) {
       console.error('Failed to fetch employees');
+      setEmployees([]);
     }
   };
 
   const fetchRecords = async () => {
     try {
-
       const response = await api.get(`/payroll/records?page=${page + 1}&per_page=${rowsPerPage}`);
-      setRecords(response.data.records);
-      setTotal(response.data.total);
+      setRecords(Array.isArray(response.data?.records) ? response.data.records : []);
+      setTotal(response.data?.total || 0);
     } catch (err) {
       setError('Failed to fetch payroll records');
+      setRecords([]);
     }
   };
 
@@ -262,7 +263,7 @@ const PayrollManagement = () => {
               <TableCell align="right">Net</TableCell><TableCell>Status</TableCell><TableCell align="center">Actions</TableCell>
             </TableRow></TableHead>
             <TableBody>
-              {records.map((record) => {
+              {Array.isArray(records) && records.map((record) => {
                 const isSelected = selected.indexOf(record.id) !== -1;
                 return (
                   <TableRow key={record.id} selected={isSelected}>
@@ -276,8 +277,8 @@ const PayrollManagement = () => {
                   <TableCell>{record.pay_period_start} - {record.pay_period_end}</TableCell>
                   <TableCell align="right">{record.hours_worked}</TableCell>
                   <TableCell align="right">{record.overtime_hours || 0}</TableCell>
-                  <TableCell align="right">₱{record.gross_pay?.toFixed(2) || '0.00'}</TableCell>
-                  <TableCell align="right">₱{record.net_pay?.toFixed(2) || '0.00'}</TableCell>
+                  <TableCell align="right">₱{record.gross_pay?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) || '0.00'}</TableCell>
+                  <TableCell align="right">₱{record.net_pay?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) || '0.00'}</TableCell>
                   <TableCell><Chip label={record.is_paid ? 'Paid' : 'Pending'} size="small" color={record.is_paid ? 'success' : 'warning'} /></TableCell>
                   <TableCell align="center">
                     <IconButton size="small" onClick={() => handleOpenRecord(record)}><EditIcon /></IconButton>
@@ -297,13 +298,13 @@ const PayrollManagement = () => {
           <Table>
             <TableHead><TableRow><TableCell>Name</TableCell><TableCell>Email</TableCell><TableCell>Department</TableCell><TableCell>Position</TableCell><TableCell align="right">Rate</TableCell><TableCell>Status</TableCell></TableRow></TableHead>
             <TableBody>
-              {employees.map((emp) => (
+              {Array.isArray(employees) && employees.map((emp) => (
                 <TableRow key={emp.id}>
                   <TableCell>{emp.first_name} {emp.last_name}</TableCell>
                   <TableCell>{emp.email || '-'}</TableCell>
                   <TableCell>{emp.department || '-'}</TableCell>
                   <TableCell>{emp.position || '-'}</TableCell>
-                  <TableCell align="right">${emp.hourly_rate ? `${emp.hourly_rate}/hr` : `${emp.monthly_salary}/mo`}</TableCell>
+                  <TableCell align="right">₱{emp.hourly_rate ? `${emp.hourly_rate?.toLocaleString()}/hr` : `${emp.monthly_salary?.toLocaleString()}/mo`}</TableCell>
                   <TableCell><Chip label={emp.is_active ? 'Active' : 'Inactive'} size="small" color={emp.is_active ? 'success' : 'default'} /></TableCell>
                 </TableRow>
               ))}
@@ -342,7 +343,7 @@ const PayrollManagement = () => {
           <Grid container spacing={2} sx={{ mt: 1 }}>
             <Grid item xs={12}><FormControl fullWidth><InputLabel>Employee</InputLabel>
               <Select value={recordForm.employee_id} onChange={(e) => setRecordForm({ ...recordForm, employee_id: e.target.value })} label="Employee" disabled={!!editingRecord}>
-                {employees.map((emp) => (<MenuItem key={emp.id} value={emp.id}>{emp.first_name} {emp.last_name}</MenuItem>))}
+                {Array.isArray(employees) && employees.map((emp) => (<MenuItem key={emp.id} value={emp.id}>{emp.first_name} {emp.last_name}</MenuItem>))}
               </Select>
             </FormControl></Grid>
             <Grid item xs={6}><TextField fullWidth label="Pay Period Start" type="date" value={recordForm.pay_period_start} onChange={(e) => setRecordForm({ ...recordForm, pay_period_start: e.target.value })} InputLabelProps={{ shrink: true }} /></Grid>

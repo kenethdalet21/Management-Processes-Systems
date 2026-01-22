@@ -60,18 +60,21 @@ const SalesManagement = () => {
   const fetchCustomers = async () => {
     try {
       const response = await api.get('/sales/customers');
-      setCustomers(response.data);
+      setCustomers(Array.isArray(response.data) ? response.data : []);
     } catch (err) {
       console.error('Failed to fetch customers');
+      setCustomers([]);
     }
   };
 
   const fetchProducts = async () => {
     try {
       const response = await api.get('/products');
-      setProducts(response.data.products || []);
+      const productsData = response.data?.products || response.data || [];
+      setProducts(Array.isArray(productsData) ? productsData : []);
     } catch (err) {
       console.error('Failed to fetch products');
+      setProducts([]);
     }
   };
 
@@ -211,25 +214,25 @@ const SalesManagement = () => {
       <Grid container spacing={2} sx={{ mb: 3 }}>
         <Grid item xs={6} md={3}>
           <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box><Typography variant="caption" color="text.secondary">Total Sales</Typography><Typography variant="h5">{analysis?.total_sales || 0}</Typography></Box>
+            <Box><Typography variant="caption" color="text.secondary">Total Sales</Typography><Typography variant="h6" sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }}>{(analysis?.total_sales || 0).toLocaleString()}</Typography></Box>
             <ReceiptIcon color="primary" />
           </Box></CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
           <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box><Typography variant="caption" color="text.secondary">Total Revenue</Typography><Typography variant="h5">₱{(analysis?.total_revenue || 0).toFixed(2)}</Typography></Box>
+            <Box sx={{ overflow: 'hidden' }}><Typography variant="caption" color="text.secondary">Total Revenue</Typography><Typography variant="h6" sx={{ fontSize: { xs: '0.85rem', md: '1.1rem' } }} noWrap>₱{(analysis?.total_revenue || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</Typography></Box>
             <AttachMoneyIcon color="success" />
           </Box></CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
           <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box><Typography variant="caption" color="text.secondary">Avg Order Value</Typography><Typography variant="h5">₱{(analysis?.avg_order_value || 0).toFixed(2)}</Typography></Box>
+            <Box sx={{ overflow: 'hidden' }}><Typography variant="caption" color="text.secondary">Avg Order Value</Typography><Typography variant="h6" sx={{ fontSize: { xs: '0.85rem', md: '1.1rem' } }} noWrap>₱{(analysis?.avg_order_value || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</Typography></Box>
             <TrendingUpIcon color="info" />
           </Box></CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
           <Card><CardContent><Box display="flex" alignItems="center" justifyContent="space-between">
-            <Box><Typography variant="caption" color="text.secondary">Customers</Typography><Typography variant="h5">{customers.length}</Typography></Box>
+            <Box><Typography variant="caption" color="text.secondary">Customers</Typography><Typography variant="h6" sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }}>{Array.isArray(customers) ? customers.length.toLocaleString() : 0}</Typography></Box>
             <PersonIcon color="secondary" />
           </Box></CardContent></Card>
         </Grid>
@@ -304,7 +307,7 @@ const SalesManagement = () => {
           <Table>
             <TableHead><TableRow><TableCell>Name</TableCell><TableCell>Email</TableCell><TableCell>Phone</TableCell><TableCell>Address</TableCell><TableCell>Since</TableCell></TableRow></TableHead>
             <TableBody>
-              {customers.map((customer) => (
+              {Array.isArray(customers) && customers.map((customer) => (
                 <TableRow key={customer.id}>
                   <TableCell>{customer.name}</TableCell>
                   <TableCell>{customer.email || '-'}</TableCell>
@@ -348,7 +351,7 @@ const SalesManagement = () => {
               <FormControl fullWidth><InputLabel>Customer (Optional)</InputLabel>
                 <Select value={selectedCustomer} onChange={(e) => setSelectedCustomer(e.target.value)} label="Customer (Optional)">
                   <MenuItem value="">Walk-in Customer</MenuItem>
-                  {customers.map((c) => (<MenuItem key={c.id} value={c.id}>{c.name}</MenuItem>))}
+                  {Array.isArray(customers) && customers.map((c) => (<MenuItem key={c.id} value={c.id}>{c.name}</MenuItem>))}
                 </Select>
               </FormControl>
             </Grid>
@@ -358,7 +361,7 @@ const SalesManagement = () => {
                 <Box display="flex" gap={2} alignItems="center">
                   <FormControl sx={{ minWidth: 200 }}><InputLabel>Product</InputLabel>
                     <Select value={item.product_id} onChange={(e) => handleItemChange(index, 'product_id', e.target.value)} label="Product">
-                      {products.map((p) => (<MenuItem key={p.id} value={p.id}>{p.name}</MenuItem>))}
+                      {Array.isArray(products) && products.map((p) => (<MenuItem key={p.id} value={p.id}>{p.name}</MenuItem>))}
                     </Select>
                   </FormControl>
                   <TextField label="Qty" type="number" value={item.quantity} onChange={(e) => handleItemChange(index, 'quantity', e.target.value)} sx={{ width: 80 }} />
