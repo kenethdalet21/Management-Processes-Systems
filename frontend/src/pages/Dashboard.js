@@ -58,8 +58,6 @@ const Dashboard = () => {
 
   const formatCurrency = (value) => `₱${parseFloat(value || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
 
-  const formatNumber = (value) => parseFloat(value || 0).toLocaleString();
-
   const MetricCard = ({ title, value, icon: Icon, color, subtitle }) => (
     <Card sx={{ bgcolor: `${color}.dark`, height: '100%' }}>
       <CardContent>
