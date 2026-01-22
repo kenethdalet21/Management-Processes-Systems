@@ -127,7 +127,7 @@ const Dashboard = () => {
       {/* Charts Row 1 */}
       <Grid container spacing={3} sx={{ mb: 3 }}>
         <Grid item xs={12} md={8}>
-          <Paper sx={{ p: 2 }}>
+          <Paper sx={{ p: 2, cursor: 'pointer', '&:hover': { boxShadow: 4 } }} onClick={() => navigate('/sales')}>
             <Typography variant="h6" gutterBottom>Sales Trend (Last 14 Days)</Typography>
             <ResponsiveContainer width="100%" height={300}>
               <AreaChart data={dailySales}>
@@ -156,10 +156,16 @@ const Dashboard = () => {
               <Typography variant="subtitle2" gutterBottom>Low Stock Items:</Typography>
               <List dense>
                 {Array.isArray(lowStock) && lowStock.slice(0, 3).map((item, i) => (
-                  <ListItem key={i}><ListItemText primary={item.name} secondary={`Stock: ${item.current_stock}`} /></ListItem>
+                  <ListItem key={i} button onClick={() => navigate('/inventory')} sx={{ '&:hover': { bgcolor: 'action.hover' } }}>
+                    <ListItemText primary={item.name} secondary={`Stock: ${item.current_stock}`} />
+                  </ListItem>
                 ))}
                 {(!Array.isArray(lowStock) || lowStock.length === 0) && <ListItem><ListItemText primary="No low stock items" /></ListItem>}
-                {Array.isArray(lowStock) && lowStock.length > 3 && <ListItem><ListItemText primary={`+${lowStock.length - 3} more items`} /></ListItem>}
+                {Array.isArray(lowStock) && lowStock.length > 3 && (
+                  <ListItem button onClick={() => navigate('/inventory')} sx={{ '&:hover': { bgcolor: 'action.hover' } }}>
+                    <ListItemText primary={`+${lowStock.length - 3} more items`} />
+                  </ListItem>
+                )}
               </List>
             </Box>
           </Paper>
@@ -169,7 +175,7 @@ const Dashboard = () => {
       {/* Charts Row 2 */}
       <Grid container spacing={3} sx={{ mb: 3 }}>
         <Grid item xs={12} md={4}>
-          <Paper sx={{ p: 2 }}>
+          <Paper sx={{ p: 2, cursor: 'pointer', '&:hover': { boxShadow: 4 } }} onClick={() => navigate('/products')}>
             <Typography variant="h6" gutterBottom>Top Selling Products</Typography>
             <ResponsiveContainer width="100%" height={250}>
               <BarChart data={topProducts} layout="vertical">
@@ -183,7 +189,7 @@ const Dashboard = () => {
           </Paper>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Paper sx={{ p: 2 }}>
+          <Paper sx={{ p: 2, cursor: 'pointer', '&:hover': { boxShadow: 4 } }} onClick={() => navigate('/inventory')}>
             <Typography variant="h6" gutterBottom>Inventory by Category</Typography>
             <ResponsiveContainer width="100%" height={250}>
               <PieChart>
@@ -223,7 +229,7 @@ const Dashboard = () => {
       {/* Summary Row */}
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
-          <Paper sx={{ p: 2 }}>
+          <Paper sx={{ p: 2, cursor: 'pointer', '&:hover': { boxShadow: 4 } }} onClick={() => navigate('/financial')}>
             <Typography variant="h6" gutterBottom>Income Summary</Typography>
             <Grid container spacing={2}>
               <Grid item xs={6}><Typography variant="body2" color="text.secondary">Total Revenue</Typography><Typography variant="h6">{formatCurrency(income.total_revenue)}</Typography></Grid>
@@ -236,7 +242,7 @@ const Dashboard = () => {
           </Paper>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Paper sx={{ p: 2 }}>
+          <Paper sx={{ p: 2, cursor: 'pointer', '&:hover': { boxShadow: 4 } }} onClick={() => navigate('/financial')}>
             <Typography variant="h6" gutterBottom>Balance Sheet Summary</Typography>
             <Grid container spacing={2}>
               <Grid item xs={6}><Typography variant="body2" color="text.secondary">Total Assets</Typography><Typography variant="h6">{formatCurrency(balance.total_assets)}</Typography></Grid>

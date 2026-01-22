@@ -86,7 +86,8 @@ const FinancialManagement = () => {
       {/* Summary Cards */}
       <Grid container spacing={2} sx={{ mb: 3 }}>
         <Grid item xs={6} md={3}>
-          <Card><CardContent>
+          <Card sx={{ cursor: 'pointer', '&:hover': { transform: 'translateY(-2px)', boxShadow: 4 }, transition: 'all 0.2s' }} onClick={() => setTabValue(0)}>
+            <CardContent>
             <Box display="flex" alignItems="center" gap={1} mb={0.5}>
               <TrendingUpIcon color="success" sx={{ fontSize: 20 }} />
               <Typography variant="caption" color="text.secondary">Total Revenue</Typography>
@@ -95,7 +96,8 @@ const FinancialManagement = () => {
           </CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
-          <Card><CardContent>
+          <Card sx={{ cursor: 'pointer', '&:hover': { transform: 'translateY(-2px)', boxShadow: 4 }, transition: 'all 0.2s' }} onClick={() => setTabValue(0)}>
+            <CardContent>
             <Box display="flex" alignItems="center" gap={1} mb={0.5}>
               <AccountBalanceIcon color="primary" sx={{ fontSize: 20 }} />
               <Typography variant="caption" color="text.secondary">Net Income</Typography>
@@ -104,7 +106,8 @@ const FinancialManagement = () => {
           </CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
-          <Card><CardContent>
+          <Card sx={{ cursor: 'pointer', '&:hover': { transform: 'translateY(-2px)', boxShadow: 4 }, transition: 'all 0.2s' }} onClick={() => setTabValue(1)}>
+            <CardContent>
             <Box display="flex" alignItems="center" gap={1} mb={0.5}>
               <AssessmentIcon color="info" sx={{ fontSize: 20 }} />
               <Typography variant="caption" color="text.secondary">Total Assets</Typography>
@@ -113,7 +116,8 @@ const FinancialManagement = () => {
           </CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
-          <Card><CardContent>
+          <Card sx={{ cursor: 'pointer', '&:hover': { transform: 'translateY(-2px)', boxShadow: 4 }, transition: 'all 0.2s' }} onClick={() => setTabValue(3)}>
+            <CardContent>
             <Box display="flex" alignItems="center" gap={1} mb={0.5}>
               <TrendingUpIcon color="success" sx={{ fontSize: 20 }} />
               <Typography variant="caption" color="text.secondary">Gross Margin</Typography>
