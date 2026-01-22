@@ -49,8 +49,13 @@ def create_app(config_class=Config):
     with app.app_context():
         db.create_all()
         
-        # Seed default users
-        from app.seed import seed_default_users
-        seed_default_users()
+        # Seed default users only if no users exist
+        try:
+            from app.models import User
+            if User.query.count() == 0:
+                from app.seed import seed_default_users
+                seed_default_users()
+        except Exception as e:
+            print(f"Note: Could not seed users: {e}")
     
     return app
