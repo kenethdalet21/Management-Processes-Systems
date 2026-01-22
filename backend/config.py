@@ -7,7 +7,13 @@ class Config:
     """Base configuration"""
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-secret-key-change-in-production'
     # Use SQLite by default for easy setup, can switch to PostgreSQL via environment variable
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+    DATABASE_URL = os.environ.get('DATABASE_URL')
+    
+    # Handle Railway PostgreSQL URL format
+    if DATABASE_URL and DATABASE_URL.startswith('postgres://'):
+        DATABASE_URL = DATABASE_URL.replace('postgres://', 'postgresql://', 1)
+    
+    SQLALCHEMY_DATABASE_URI = DATABASE_URL or \
         'sqlite:///' + os.path.join(basedir, 'business_management.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     

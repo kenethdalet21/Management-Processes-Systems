@@ -20,7 +20,17 @@ def create_app(config_class=Config):
     migrate.init_app(app, db)
     jwt.init_app(app)
     bcrypt.init_app(app)
-    CORS(app)
+    
+    # CORS configuration - Allow GitHub Pages and localhost
+    CORS(app, 
+         resources={r"/api/*": {"origins": [
+             "http://localhost:3000",
+             "http://localhost:3001",
+             "https://kenethdalet21.github.io"
+         ]}},
+         supports_credentials=True,
+         allow_headers=["Content-Type", "Authorization"],
+         methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
     
     # Register blueprints
     from app.routes import auth, dashboard, products, inventory, sales, payroll, financial, excel_import_export, settings
