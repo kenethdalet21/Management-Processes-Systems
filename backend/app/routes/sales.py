@@ -78,7 +78,7 @@ def get_sale(sale_id):
 def create_sale():
     """Create a new sale"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         
         if not check_permission(user_id, [UserRole.ADMIN, UserRole.OPERATIONS_MANAGER]):
             return jsonify({'error': 'Insufficient permissions'}), 403
@@ -209,7 +209,7 @@ def create_sale():
 def update_sale(sale_id):
     """Update a sale (limited updates allowed)"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         
         if not check_permission(user_id, [UserRole.ADMIN, UserRole.OPERATIONS_MANAGER]):
             return jsonify({'error': 'Insufficient permissions'}), 403
@@ -246,7 +246,7 @@ def update_sale(sale_id):
 def delete_sale(sale_id):
     """Delete a sale (void)"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         
         if not check_permission(user_id, [UserRole.ADMIN]):
             return jsonify({'error': 'Insufficient permissions'}), 403

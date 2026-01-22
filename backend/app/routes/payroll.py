@@ -19,7 +19,7 @@ def check_permission(user_id, required_roles):
 def get_employees():
     """Get all employees"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         
         if not check_permission(user_id, [UserRole.ADMIN, UserRole.FINANCE_MANAGER]):
             return jsonify({'error': 'Insufficient permissions'}), 403
@@ -39,7 +39,7 @@ def get_employees():
 def get_payroll_records():
     """Get payroll records with filtering"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         
         if not check_permission(user_id, [UserRole.ADMIN, UserRole.FINANCE_MANAGER]):
             return jsonify({'error': 'Insufficient permissions'}), 403
@@ -80,7 +80,7 @@ def get_payroll_records():
 def create_payroll_record():
     """Create a payroll record"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         
         if not check_permission(user_id, [UserRole.ADMIN, UserRole.FINANCE_MANAGER]):
             return jsonify({'error': 'Insufficient permissions'}), 403
@@ -159,7 +159,7 @@ def create_payroll_record():
 def update_payroll_record(record_id):
     """Update a payroll record"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         
         if not check_permission(user_id, [UserRole.ADMIN, UserRole.FINANCE_MANAGER]):
             return jsonify({'error': 'Insufficient permissions'}), 403
@@ -219,7 +219,7 @@ def update_payroll_record(record_id):
 def delete_payroll_record(record_id):
     """Delete a payroll record"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         
         if not check_permission(user_id, [UserRole.ADMIN]):
             return jsonify({'error': 'Insufficient permissions'}), 403
@@ -247,7 +247,7 @@ def delete_payroll_record(record_id):
 def get_payroll_summary():
     """Get payroll summary"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         
         if not check_permission(user_id, [UserRole.ADMIN, UserRole.FINANCE_MANAGER]):
             return jsonify({'error': 'Insufficient permissions'}), 403
@@ -316,7 +316,7 @@ def get_payroll_summary():
 def mark_as_paid(record_id):
     """Mark payroll record as paid"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         
         if not check_permission(user_id, [UserRole.ADMIN, UserRole.FINANCE_MANAGER]):
             return jsonify({'error': 'Insufficient permissions'}), 403

@@ -46,7 +46,7 @@ const Dashboard = () => {
       setInventoryAnalysis(invRes.data);
       setPayrollSummary(payRes.data);
       setFinancialData({ statements: finStatementsRes.data, ratios: finRatiosRes.data });
-      setLowStock(lowStockRes.data || []);
+      setLowStock(Array.isArray(lowStockRes.data) ? lowStockRes.data : []);
     } catch (err) {
       setError('Failed to fetch dashboard data');
     } finally {
@@ -138,16 +138,16 @@ const Dashboard = () => {
               </Box>
               <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
                 <Typography>Low Stock Alerts</Typography>
-                <Chip label={lowStock.length} color={lowStock.length > 0 ? 'warning' : 'success'} icon={<WarningIcon />} />
+                <Chip label={Array.isArray(lowStock) ? lowStock.length : 0} color={(Array.isArray(lowStock) && lowStock.length > 0) ? 'warning' : 'success'} icon={<WarningIcon />} />
               </Box>
               <Divider sx={{ my: 2 }} />
               <Typography variant="subtitle2" gutterBottom>Low Stock Items:</Typography>
               <List dense>
-                {lowStock.slice(0, 3).map((item, i) => (
+                {Array.isArray(lowStock) && lowStock.slice(0, 3).map((item, i) => (
                   <ListItem key={i}><ListItemText primary={item.name} secondary={`Stock: ${item.current_stock}`} /></ListItem>
                 ))}
-                {lowStock.length === 0 && <ListItem><ListItemText primary="No low stock items" /></ListItem>}
-                {lowStock.length > 3 && <ListItem><ListItemText primary={`+${lowStock.length - 3} more items`} /></ListItem>}
+                {(!Array.isArray(lowStock) || lowStock.length === 0) && <ListItem><ListItemText primary="No low stock items" /></ListItem>}
+                {Array.isArray(lowStock) && lowStock.length > 3 && <ListItem><ListItemText primary={`+${lowStock.length - 3} more items`} /></ListItem>}
               </List>
             </Box>
           </Paper>

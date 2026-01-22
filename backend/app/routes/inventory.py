@@ -58,7 +58,7 @@ def get_inventory_logs():
 def stock_in():
     """Record stock in"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         
         if not check_permission(user_id, [UserRole.ADMIN, UserRole.OPERATIONS_MANAGER]):
             return jsonify({'error': 'Insufficient permissions'}), 403
@@ -106,7 +106,7 @@ def stock_in():
 def stock_out():
     """Record stock out"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         
         if not check_permission(user_id, [UserRole.ADMIN, UserRole.OPERATIONS_MANAGER]):
             return jsonify({'error': 'Insufficient permissions'}), 403
@@ -305,7 +305,7 @@ def get_inventory_products():
 def delete_inventory_log(log_id):
     """Delete an inventory log"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         
         if not check_permission(user_id, [UserRole.ADMIN, UserRole.OPERATIONS_MANAGER]):
             return jsonify({'error': 'Insufficient permissions'}), 403

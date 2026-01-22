@@ -15,7 +15,7 @@ def check_admin(user_id):
 def get_users():
     """Get all users for management"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         
         if not check_admin(user_id):
             return jsonify({'error': 'Admin access required'}), 403
@@ -34,7 +34,7 @@ def get_users():
 def get_tab_permissions():
     """Get all tab permissions"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         user = User.query.get(user_id)
         
         # Admin can see all permissions
@@ -56,7 +56,7 @@ def get_tab_permissions():
 def get_user_tab_permissions(user_id):
     """Get tab permissions for a specific user"""
     try:
-        current_user_id = get_jwt_identity()
+        current_user_id = int(get_jwt_identity())
         current_user = User.query.get(current_user_id)
         
         # Admin can see any user's permissions, others only their own
@@ -77,7 +77,7 @@ def get_user_tab_permissions(user_id):
 def create_or_update_tab_permission():
     """Create or update a tab permission (Admin only)"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         
         if not check_admin(user_id):
             return jsonify({'error': 'Admin access required'}), 403
@@ -125,7 +125,7 @@ def create_or_update_tab_permission():
 def bulk_update_tab_permissions():
     """Bulk update tab permissions for a user (Admin only)"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         
         if not check_admin(user_id):
             return jsonify({'error': 'Admin access required'}), 403
@@ -168,7 +168,7 @@ def bulk_update_tab_permissions():
 def delete_tab_permission(permission_id):
     """Delete a tab permission (Admin only)"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         
         if not check_admin(user_id):
             return jsonify({'error': 'Admin access required'}), 403

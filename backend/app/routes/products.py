@@ -71,7 +71,7 @@ def get_product(product_id):
 def create_product():
     """Create a new product"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         
         if not check_permission(user_id, [UserRole.ADMIN, UserRole.OPERATIONS_MANAGER]):
             return jsonify({'error': 'Insufficient permissions'}), 403
@@ -120,7 +120,7 @@ def create_product():
 def update_product(product_id):
     """Update a product"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         
         if not check_permission(user_id, [UserRole.ADMIN, UserRole.OPERATIONS_MANAGER]):
             return jsonify({'error': 'Insufficient permissions'}), 403
@@ -168,7 +168,7 @@ def update_product(product_id):
 def delete_product(product_id):
     """Delete a product"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         
         if not check_permission(user_id, [UserRole.ADMIN]):
             return jsonify({'error': 'Insufficient permissions'}), 403
@@ -203,7 +203,7 @@ def get_categories():
 def create_category():
     """Create a new category"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         
         if not check_permission(user_id, [UserRole.ADMIN, UserRole.OPERATIONS_MANAGER]):
             return jsonify({'error': 'Insufficient permissions'}), 403

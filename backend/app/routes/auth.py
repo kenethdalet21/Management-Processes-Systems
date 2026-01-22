@@ -74,9 +74,9 @@ def login():
         if not user.is_active:
             return jsonify({'error': 'Account is inactive'}), 403
         
-        # Create tokens
-        access_token = create_access_token(identity=user.id)
-        refresh_token = create_refresh_token(identity=user.id)
+        # Create tokens (identity must be a string)
+        access_token = create_access_token(identity=str(user.id))
+        refresh_token = create_refresh_token(identity=str(user.id))
         
         return jsonify({
             'message': 'Login successful',
@@ -93,7 +93,7 @@ def login():
 def refresh():
     """Refresh access token"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         access_token = create_access_token(identity=user_id)
         
         return jsonify({
@@ -108,7 +108,7 @@ def refresh():
 def get_current_user():
     """Get current user information"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         user = User.query.get(user_id)
         
         if not user:
@@ -130,7 +130,7 @@ def logout():
 def change_password():
     """Change user password"""
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         data = request.get_json()
         
         if not data.get('old_password') or not data.get('new_password'):
