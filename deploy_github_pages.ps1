@@ -7,7 +7,7 @@ Write-Host ""
 
 # Step 1: Check if gh-pages is installed
 Write-Host "[1/6] Checking dependencies..." -ForegroundColor Yellow
-cd "D:\Management Processes Systems\frontend"
+Set-Location "D:\Management Processes Systems\frontend"
 
 $packageJson = Get-Content "package.json" -Raw | ConvertFrom-Json
 if (-not $packageJson.devDependencies.'gh-pages') {
@@ -100,3 +100,7 @@ Write-Host "- Deploy your backend to a cloud service" -ForegroundColor White
 Write-Host "- Update .env.production with the backend URL" -ForegroundColor White
 Write-Host "- Configure CORS on your backend" -ForegroundColor White
 Write-Host ""
+
+SECRET_KEY=your-secret-key-2026
+JWT_SECRET_KEY=your-jwt-key-2026
+FLASK_ENV=production
