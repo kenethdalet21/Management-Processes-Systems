@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box, Grid, Paper, Typography, Card, CardContent, Select, MenuItem, FormControl,
   InputLabel, Alert, Chip, Divider, List, ListItem, ListItemText, LinearProgress
@@ -16,6 +17,7 @@ import PaymentIcon from '@mui/icons-material/Payment';
 import api from '../services/api';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [salesAnalysis, setSalesAnalysis] = useState(null);
@@ -58,8 +60,20 @@ const Dashboard = () => {
 
   const formatCurrency = (value) => `₱${parseFloat(value || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
 
-  const MetricCard = ({ title, value, icon: Icon, color, subtitle }) => (
-    <Card sx={{ bgcolor: `${color}.dark`, height: '100%' }}>
+  const MetricCard = ({ title, value, icon: Icon, color, subtitle, onClick }) => (
+    <Card 
+      sx={{ 
+        bgcolor: `${color}.dark`, 
+        height: '100%',
+        cursor: onClick ? 'pointer' : 'default',
+        transition: 'transform 0.2s, box-shadow 0.2s',
+        '&:hover': onClick ? {
+          transform: 'translateY(-4px)',
+          boxShadow: 6
+        } : {}
+      }}
+      onClick={onClick}
+    >
       <CardContent>
         <Box display="flex" alignItems="center" gap={1} mb={0.5}>
           <Icon sx={{ fontSize: 20, color: 'white', opacity: 0.9 }} />
@@ -103,11 +117,11 @@ const Dashboard = () => {
 
       {/* Key Metrics Row */}
       <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid item xs={6} md={2.4}><MetricCard title="Total Revenue" value={formatCurrency(income.total_revenue)} icon={AttachMoneyIcon} color="success" /></Grid>
-        <Grid item xs={6} md={2.4}><MetricCard title="Net Income" value={formatCurrency(income.net_income)} icon={TrendingUpIcon} color="primary" /></Grid>
-        <Grid item xs={6} md={2.4}><MetricCard title="Total Sales" value={salesAnalysis?.total_sales || 0} icon={ReceiptIcon} color="info" subtitle={`Avg: ${formatCurrency(salesAnalysis?.avg_order_value)}`} /></Grid>
-        <Grid item xs={6} md={2.4}><MetricCard title="Inventory Value" value={formatCurrency(inventoryAnalysis?.total_value)} icon={InventoryIcon} color="warning" subtitle={`${inventoryAnalysis?.total_units || 0} units`} /></Grid>
-        <Grid item xs={6} md={2.4}><MetricCard title="Payroll (Month)" value={formatCurrency(payrollSummary?.total_gross)} icon={PaymentIcon} color="secondary" subtitle={`${payrollSummary?.pending_count || 0} pending`} /></Grid>
+        <Grid item xs={6} md={2.4}><MetricCard title="Total Revenue" value={formatCurrency(income.total_revenue)} icon={AttachMoneyIcon} color="success" onClick={() => navigate('/financial')} /></Grid>
+        <Grid item xs={6} md={2.4}><MetricCard title="Net Income" value={formatCurrency(income.net_income)} icon={TrendingUpIcon} color="primary" onClick={() => navigate('/financial')} /></Grid>
+        <Grid item xs={6} md={2.4}><MetricCard title="Total Sales" value={salesAnalysis?.total_sales || 0} icon={ReceiptIcon} color="info" subtitle={`Avg: ${formatCurrency(salesAnalysis?.avg_order_value)}`} onClick={() => navigate('/sales')} /></Grid>
+        <Grid item xs={6} md={2.4}><MetricCard title="Inventory Value" value={formatCurrency(inventoryAnalysis?.total_value)} icon={InventoryIcon} color="warning" subtitle={`${inventoryAnalysis?.total_units || 0} units`} onClick={() => navigate('/inventory')} /></Grid>
+        <Grid item xs={6} md={2.4}><MetricCard title="Payroll (Month)" value={formatCurrency(payrollSummary?.total_gross)} icon={PaymentIcon} color="secondary" subtitle={`${payrollSummary?.pending_count || 0} pending`} onClick={() => navigate('/payroll')} /></Grid>
       </Grid>
 
       {/* Charts Row 1 */}
